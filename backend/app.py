@@ -83,17 +83,19 @@ def recommend(book_title, top_k=5):
     return recs
 
 
-# Flask App
-app = Flask(__name__)
-CORS(app)  # Enable cross-origin requests from frontend
+# Flask App — serve frontend + API from one server
+FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")
+app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
+CORS(app)
 
 
 @app.route("/")
 def home():
-    return jsonify({"status": "ok", "message": "Book Recommender Backend Running ✅"})
+    """Serve the frontend index.html."""
+    return app.send_static_file("index.html")
 
 
-@app.route("/recommend/<book>")
+@app.route("/api/recommend/<book>")
 def get_recommendation(book):
     result = recommend(book)
     if result is None:
@@ -101,13 +103,15 @@ def get_recommendation(book):
     return jsonify(result)
 
 
-@app.route("/books")
+@app.route("/api/books")
 def list_books():
-    """Return all available book titles (useful for the frontend)."""
+    """Return all available book titles."""
     return jsonify(list(title_encoder.classes_))
 
 
 if __name__ == "__main__":
-    print("Book Recommender Backend starting...")
+    print("Book Recommender starting...")
+    print(f"Frontend: http://127.0.0.1:5000")
+    print(f"API:      http://127.0.0.1:5000/api/books")
     print(f"Available books: {list(title_encoder.classes_)}")
     app.run(debug=True, port=5000)

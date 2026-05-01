@@ -1,20 +1,18 @@
-const API_BASE = "http://127.0.0.1:5000";
-
 async function getRecommendations() {
     const titleInput = document.getElementById("bookInput");
     const resultsDiv = document.getElementById("results");
     const title = titleInput.value.trim();
 
     if (!title) {
-        resultsDiv.innerHTML = '<p class="error">⚠️ Please enter a book name.</p>';
+        resultsDiv.innerHTML = '<p class="error">Please enter a book name.</p>';
         return;
     }
 
     // Show loading state
-    resultsDiv.innerHTML = '<p class="loading">🔄 Finding recommendations...</p>';
+    resultsDiv.innerHTML = '<p class="loading">Finding recommendations...</p>';
 
     try {
-        const res = await fetch(`${API_BASE}/recommend/${encodeURIComponent(title)}`);
+        const res = await fetch(`/api/recommend/${encodeURIComponent(title)}`);
 
         if (!res.ok) {
             const errorData = await res.json();

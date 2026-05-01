@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GNN-powered Book Recommendation System - Get personalized book suggestions">
+    <title>📚 Book Recommender</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>📚 Book Recommendation System</h1>
+    <p class="subtitle">Powered by Graph Neural Networks</p>
+
+    <div class="search-box">
+        <input type="text" id="bookInput" placeholder="Enter book name (e.g. 1984, The Hobbit)">
+        <button id="recommendBtn" onclick="getRecommendations()">Recommend</button>
+    </div>
+
+    <div id="results"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
